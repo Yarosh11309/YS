@@ -6,7 +6,7 @@
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       padding: 20px;
-      background: #ffffff;
+      background: linear-gradient(135deg, #f8f9fb, #e5ecf6);
       color: #333;
       max-width: 500px;
     }
@@ -22,27 +22,28 @@
     input[type="text"],
     select,
     input[type="color"] {
-      padding: 6px;
+      padding: 8px;
       margin-top: 4px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
       box-sizing: border-box;
-      background: #fafafa;
+      background: #ffffff;
     }
 
     button {
       margin-top: 12px;
       padding: 8px 16px;
-      background: linear-gradient(90deg, #ff4e45, #d90429);
+      background: linear-gradient(90deg, #ff6a00, #ee0979);
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: #fff;
       font-weight: 500;
       cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     button:hover {
-      background: linear-gradient(90deg, #e33b35, #b40320);
+      background: linear-gradient(90deg, #e65600, #c1056c);
     }
   </style>
 </head>
@@ -55,16 +56,19 @@
   <label>Background Image: <input type="file" id="themeBgImage" accept="image/*"></label>
   <label>Font Style:
     <select id="themeFontStyle">
-      <option value="">Default</option>
-      <option value="Arial">Arial</option>
-      <option value="Courier New">Courier New</option>
-      <option value="Georgia">Georgia</option>
-      <option value="Times New Roman">Times New Roman</option>
-      <option value="Comic Sans MS">Comic Sans MS</option>
-      <option value="Impact">Impact</option>
-      <option value="Lucida Console">Lucida Console</option>
-      <option value="Trebuchet MS">Trebuchet MS</option>
-      <option value="Brush Script MT">Brush Script MT</option>
+      <option value="" style="font-family: inherit;">Default</option>
+      <option value="Arial" style="font-family: Arial;">Arial</option>
+      <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
+      <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+      <option value="Times New Roman" style="font-family: 'Times New Roman';">Times New Roman</option>
+      <option value="Comic Sans MS" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
+      <option value="Impact" style="font-family: Impact;">Impact</option>
+      <option value="Lucida Console" style="font-family: 'Lucida Console';">Lucida Console</option>
+      <option value="Trebuchet MS" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
+      <option value="Brush Script MT" style="font-family: 'Brush Script MT';">Brush Script MT</option>
+      <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+      <option value="Palatino" style="font-family: Palatino;">Palatino</option>
+      <option value="Verdana" style="font-family: Verdana;">Verdana</option>
     </select>
   </label>
   <label>Font Color:
