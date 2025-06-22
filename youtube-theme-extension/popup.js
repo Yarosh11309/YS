@@ -1,24 +1,41 @@
+// Built-in themes for the Theme store. Images can be embedded as data URIs or
+// use a relative path which will be resolved with `chrome.runtime.getURL`.
 const storeThemes = [
   {
     name: 'Sunny Day',
     description: 'Bright colors and comic font.',
     bgColor: '#fff0b3',
     fontStyle: 'Comic Sans MS',
-    fontColor: '#000000'
+    fontColor: '#000000',
+    bgImage:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAIAAAB+RarbAAAAY0lEQVR4nO3PAQ3AIADAMMC/HOTghbv4k71VsM179viT9XXA2wzXGa4zXGe4znCd4TrDdYbrDNcZrjNcZ7jOcJ3hOsN1husM1xmuM1xnuM5wneE6w3WG6wzXGa4zXGe4znDdA/8wAwcclW70AAAAAElFTkSuQmCC'
   },
   {
     name: 'Midnight',
     description: 'Dark background with white text.',
     bgColor: '#1a1a1a',
     fontStyle: 'Arial',
-    fontColor: '#FFFFFF'
+    fontColor: '#FFFFFF',
+    bgImage:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAIAAAB+RarbAAAAY0lEQVR4nO3PAQ3AIADAMEAIStCJ3rv4k71VsM197viT9XXA2wzXGa4zXGe4znCd4TrDdYbrDNcZrjNcZ7jOcJ3hOsN1husM1xmuM1xnuM5wneE6w3WG6wzXGa4zXGe4znDdA2tSAWh3Olc5AAAAAElFTkSuQmCC'
   },
   {
     name: 'Ocean',
     description: 'Deep blue tones and modern font.',
     bgColor: '#0077b6',
     fontStyle: 'Trebuchet MS',
-    fontColor: '#FFFFFF'
+    fontColor: '#FFFFFF',
+    bgImage:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAIAAAB+RarbAAAAY0lEQVR4nO3PQRHAIADAMOCJMDQhfy62uy5R0M59z/iT9XXA2wzXGa4zXGe4znCd4TrDdYbrDNcZrjNcZ7jOcJ3hOsN1husM1xmuM1xnuM5wneE6w3WG6wzXGa4zXGe4znDdA5f3AUC0D5AUAAAAAElFTkSuQmCC'
+  },
+  {
+    name: 'Fiery Sunset',
+    description: 'Warm gradient with bold text.',
+    bgColor: '#fe8a3f',
+    fontStyle: 'Impact',
+    fontColor: '#FFFFFF',
+    bgImage:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAIAAAB+RarbAAAAYElEQVR4nO3PAQ3AIADAMEAr/i2Ai5PsrYJtnj1+Zb0O+JrhOsN1husM1xmuM1xnuM5wneE6w3WG6wzXGa4zXGe4znCd4TrDdYbrDNcZrjNcZ7jOcJ3hOsN1husM1xmuu80OAduWWy5+AAAAAElFTkSuQmCC'
   }
 ];
 
@@ -73,6 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function resolveImage(img) {
+    if (!img) return null;
+    return /^data:|^https?:/.test(img) ? img : chrome.runtime.getURL(img);
+  }
+
   function renderStore(themes) {
     thumbnails.innerHTML = '';
     themeDetails.style.display = 'none';
@@ -85,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       div.style.cursor = 'pointer';
       div.style.border = '1px solid #ccc';
       if (t.bgImage) {
-        div.style.backgroundImage = `url(${t.bgImage})`;
+        div.style.backgroundImage = `url(${resolveImage(t.bgImage)})`;
         div.style.backgroundSize = 'cover';
         div.style.backgroundPosition = 'center';
       } else {
@@ -115,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     preview.style.width = '100%';
     preview.style.height = '80px';
     if (theme.bgImage) {
-      preview.style.backgroundImage = `url(${theme.bgImage})`;
+      preview.style.backgroundImage = `url(${resolveImage(theme.bgImage)})`;
       preview.style.backgroundSize = 'cover';
       preview.style.backgroundPosition = 'center';
     } else {
@@ -240,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fontColor: theme.fontColor || ''
     };
     if (theme.bgImage) {
-      data.bgImage = theme.bgImage;
+      data.bgImage = resolveImage(theme.bgImage);
     }
     const done = () => {
       chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {

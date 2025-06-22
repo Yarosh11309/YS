@@ -8,6 +8,7 @@ This repository contains a simple Chrome extension that allows you to customize 
 3. Switch the font color between white and black (applies to all text).
 4. Create your own themes in the **You Theme** page; they appear in the "Pre-made Theme" drop-down.
 5. Browse built-in themes through the **Theme store**, open their details and use them with a single click.
+6. Add your own built-in themes by editing the `storeThemes` array in `popup.js` and provide `bgImage` data URIs or image paths.
 
 ## Installation
 1. Open Google Chrome and navigate to `chrome://extensions`.
