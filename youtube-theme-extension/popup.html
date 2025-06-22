@@ -27,8 +27,17 @@
       font-size: 13px;
     }
 
-    label input[type="radio"] {
-      margin-right: 6px;
+    .inline-label {
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0;
+      gap: 6px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
     select,
@@ -77,9 +86,9 @@
 <body>
   <div id="mainPage">
     <h3>YouTube Theme</h3>
-    <div>
-      <label><input type="radio" name="bgMode" value="color" checked> Use color</label>
-      <label><input type="radio" name="bgMode" value="image"> Use custom image</label>
+    <div class="radio-group">
+      <label class="inline-label"><input type="radio" name="bgMode" value="color" checked>Use color</label>
+      <label class="inline-label"><input type="radio" name="bgMode" value="image">Use custom image</label>
     </div>
     <label id="colorRow">Background Color: <input type="color" id="bgColor"></label>
     <label id="imageRow" style="display:none">Custom Background Image: <input type="file" id="bgImage" accept="image/*"></label>
