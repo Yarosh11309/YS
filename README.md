@@ -14,4 +14,4 @@ This repository contains a simple Chrome extension that allows you to customize 
 3. Click **Load unpacked** and select the `youtube-theme-extension` folder.
 
 After loading, open YouTube and click the extension icon to access the popup menu. Selecting a color, font or image applies the change immediately on the page. Use the Options link to manage pre-made themes.
-Custom background images will automatically resize to fit your screen so the entire picture is visible.
+Custom background images automatically resize to fit your screen and stay fixed so the whole picture is visible without scrolling.

@@ -16,8 +16,13 @@ function applyStyles(data) {
     setStyle('backgroundSize', 'contain');
     setStyle('backgroundRepeat', 'no-repeat');
     setStyle('backgroundPosition', 'center');
+    setStyle('backgroundAttachment', 'fixed');
   } else {
     setStyle('backgroundImage', '');
+    setStyle('backgroundSize', '');
+    setStyle('backgroundRepeat', '');
+    setStyle('backgroundPosition', '');
+    setStyle('backgroundAttachment', '');
   }
 
   // Inject style element to override fonts and colors across the page
