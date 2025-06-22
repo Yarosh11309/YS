@@ -9,6 +9,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeSelect = document.getElementById('themeSelect');
   const saveBtn = document.getElementById('save');
 
+  const mainPage = document.getElementById('mainPage');
+  const storePage = document.getElementById('storePage');
+  const youThemePage = document.getElementById('youThemePage');
+  const thumbnails = document.getElementById('thumbnails');
+  const themeDetails = document.getElementById('themeDetails');
+  const themesContainer = document.getElementById('themesContainer');
+  const youThemeBtn = document.getElementById('youThemeBtn');
+  const storeBtn = document.getElementById('storeBtn');
+  const addThemeBtn = document.getElementById('addTheme');
+  const themeName = document.getElementById('themeName');
+  const themeBgColor = document.getElementById('themeBgColor');
+  const themeBgImage = document.getElementById('themeBgImage');
+  const themeFontStyle = document.getElementById('themeFontStyle');
+  const themeFontColor = document.getElementById('themeFontColor');
+
   // Load saved options
   let currentBgImage = null;
   chrome.storage.local.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage', 'themes'], (data) => {
@@ -30,6 +45,76 @@ document.addEventListener('DOMContentLoaded', () => {
       option.value = i;
       option.textContent = t.name;
       themeSelect.appendChild(option);
+    });
+  }
+
+  function renderStore(themes) {
+    thumbnails.innerHTML = '';
+    themeDetails.style.display = 'none';
+    thumbnails.style.display = 'flex';
+    themes.forEach((t, i) => {
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.style.width = '80px';
+      div.style.height = '60px';
+      div.style.cursor = 'pointer';
+      div.style.border = '1px solid #ccc';
+      if (t.bgImage) {
+        div.style.backgroundImage = `url(${t.bgImage})`;
+        div.style.backgroundSize = 'cover';
+        div.style.backgroundPosition = 'center';
+      } else {
+        div.style.background = t.bgColor || '#ffffff';
+      }
+      div.addEventListener('click', () => showDetails(t));
+      thumbnails.appendChild(div);
+    });
+  }
+
+  function showDetails(theme) {
+    thumbnails.style.display = 'none';
+    themeDetails.style.display = 'block';
+    themeDetails.innerHTML = '';
+    const back = document.createElement('button');
+    back.textContent = '\u2190 Back';
+    back.className = 'backBtn';
+    themeDetails.appendChild(back);
+    back.addEventListener('click', () => {
+      themeDetails.style.display = 'none';
+      thumbnails.style.display = 'flex';
+    });
+    const title = document.createElement('h4');
+    title.textContent = theme.name;
+    themeDetails.appendChild(title);
+    const preview = document.createElement('div');
+    preview.style.width = '100%';
+    preview.style.height = '80px';
+    if (theme.bgImage) {
+      preview.style.backgroundImage = `url(${theme.bgImage})`;
+      preview.style.backgroundSize = 'cover';
+      preview.style.backgroundPosition = 'center';
+    } else {
+      preview.style.background = theme.bgColor || '#ffffff';
+    }
+    themeDetails.appendChild(preview);
+    const font = document.createElement('p');
+    font.style.fontFamily = theme.fontStyle || 'inherit';
+    font.textContent = `Font: ${theme.fontStyle || 'Default'}`;
+    themeDetails.appendChild(font);
+    const color = document.createElement('p');
+    color.style.color = theme.fontColor || '#000000';
+    color.textContent = `Font color: ${theme.fontColor || 'Default'}`;
+    themeDetails.appendChild(color);
+  }
+
+  function renderYouThemes(themes) {
+    themesContainer.innerHTML = '';
+    themes.forEach((t, i) => {
+      const div = document.createElement('div');
+      const color = t.fontColor ? ` - ${t.fontColor}` : '';
+      const img = t.bgImage ? ' - image' : '';
+      div.textContent = `${i + 1}. ${t.name} - ${t.bgColor} - ${t.fontStyle}${color}${img}`;
+      themesContainer.appendChild(div);
     });
   }
 
@@ -109,6 +194,75 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         afterSave();
       }
+    });
+  }
+
+  function loadStore() {
+    chrome.storage.local.get('themes', (data) => {
+      const themes = data.themes || [];
+      renderStore(themes);
+    });
+  }
+
+  function loadYouThemes() {
+    chrome.storage.local.get('themes', (data) => {
+      const themes = data.themes || [];
+      renderYouThemes(themes);
+    });
+  }
+
+  youThemeBtn.addEventListener('click', () => {
+    mainPage.style.display = 'none';
+    storePage.style.display = 'none';
+    youThemePage.style.display = 'block';
+    loadYouThemes();
+  });
+
+  storeBtn.addEventListener('click', () => {
+    mainPage.style.display = 'none';
+    youThemePage.style.display = 'none';
+    storePage.style.display = 'block';
+    loadStore();
+  });
+
+  document.querySelectorAll('.backBtn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      youThemePage.style.display = 'none';
+      storePage.style.display = 'none';
+      mainPage.style.display = 'block';
+    });
+  });
+
+  addThemeBtn.addEventListener('click', () => {
+    const files = themeBgImage.files;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = () => saveTheme(reader.result);
+      reader.readAsDataURL(files[0]);
+    } else {
+      saveTheme(null);
+    }
+  });
+
+  function saveTheme(imageData) {
+    chrome.storage.local.get('themes', (data) => {
+      const themes = data.themes || [];
+      const theme = {
+        name: themeName.value,
+        bgColor: themeBgColor.value,
+        fontStyle: themeFontStyle.value,
+        fontColor: themeFontColor.value
+      };
+      if (imageData) theme.bgImage = imageData;
+      themes.push(theme);
+      chrome.storage.local.set({ themes }, () => {
+        renderYouThemes(themes);
+        themeName.value = '';
+        themeBgColor.value = '#ffffff';
+        themeFontStyle.value = '';
+        themeFontColor.value = '';
+        themeBgImage.value = '';
+      });
     });
   }
 });
