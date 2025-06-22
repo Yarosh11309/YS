@@ -1,3 +1,27 @@
+const storeThemes = [
+  {
+    name: 'Sunny Day',
+    description: 'Bright colors and comic font.',
+    bgColor: '#fff0b3',
+    fontStyle: 'Comic Sans MS',
+    fontColor: '#000000'
+  },
+  {
+    name: 'Midnight',
+    description: 'Dark background with white text.',
+    bgColor: '#1a1a1a',
+    fontStyle: 'Arial',
+    fontColor: '#FFFFFF'
+  },
+  {
+    name: 'Ocean',
+    description: 'Deep blue tones and modern font.',
+    bgColor: '#0077b6',
+    fontStyle: 'Trebuchet MS',
+    fontColor: '#FFFFFF'
+  }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   const bgColor = document.getElementById('bgColor');
   const fontStyle = document.getElementById('fontStyle');
@@ -40,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function populateThemes(themes) {
+    themeSelect.innerHTML = '<option value="">None</option>';
     themes.forEach((t, i) => {
       const option = document.createElement('option');
       option.value = i;
@@ -105,6 +130,17 @@ document.addEventListener('DOMContentLoaded', () => {
     color.style.color = theme.fontColor || '#000000';
     color.textContent = `Font color: ${theme.fontColor || 'Default'}`;
     themeDetails.appendChild(color);
+    if (theme.description) {
+      const desc = document.createElement('p');
+      desc.textContent = theme.description;
+      themeDetails.appendChild(desc);
+    }
+    const useBtn = document.createElement('button');
+    useBtn.textContent = 'Use theme';
+    themeDetails.appendChild(useBtn);
+    useBtn.addEventListener('click', () => {
+      applyThemeFromStore(theme);
+    });
   }
 
   function renderYouThemes(themes) {
@@ -197,17 +233,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function applyThemeFromStore(theme) {
+    const data = {
+      bgColor: theme.bgColor || '#ffffff',
+      fontStyle: theme.fontStyle || '',
+      fontColor: theme.fontColor || ''
+    };
+    if (theme.bgImage) {
+      data.bgImage = theme.bgImage;
+    }
+    const done = () => {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        if (tabs[0]) {
+          chrome.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
+        }
+      });
+    };
+    if (!theme.bgImage) {
+      chrome.storage.local.set(data, () => {
+        chrome.storage.local.remove('bgImage', done);
+      });
+    } else {
+      chrome.storage.local.set(data, done);
+    }
+  }
+
   function loadStore() {
-    chrome.storage.local.get('themes', (data) => {
-      const themes = data.themes || [];
-      renderStore(themes);
-    });
+    renderStore(storeThemes);
   }
 
   function loadYouThemes() {
     chrome.storage.local.get('themes', (data) => {
       const themes = data.themes || [];
       renderYouThemes(themes);
+      populateThemes(themes);
     });
   }
 
@@ -257,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
       themes.push(theme);
       chrome.storage.local.set({ themes }, () => {
         renderYouThemes(themes);
+        populateThemes(themes);
         themeName.value = '';
         themeBgColor.value = '#ffffff';
         themeFontStyle.value = '';
