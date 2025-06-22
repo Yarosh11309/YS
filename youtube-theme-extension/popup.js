@@ -1,15 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
   const bgColor = document.getElementById('bgColor');
   const fontStyle = document.getElementById('fontStyle');
+  const fontColor = document.getElementById('fontColor');
   const bgImage = document.getElementById('bgImage');
+  const bgModeRadios = document.querySelectorAll('input[name="bgMode"]');
+  const colorRow = document.getElementById('colorRow');
+  const imageRow = document.getElementById('imageRow');
   const themeSelect = document.getElementById('themeSelect');
   const saveBtn = document.getElementById('save');
 
   // Load saved options
-  chrome.storage.sync.get(['bgColor', 'fontStyle', 'bgImage', 'themes'], (data) => {
+  let currentBgImage = null;
+  chrome.storage.sync.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage', 'themes'], (data) => {
     if (data.bgColor) bgColor.value = data.bgColor;
     if (data.fontStyle) fontStyle.value = data.fontStyle;
+    if (data.fontColor) fontColor.value = data.fontColor;
     if (data.themes) populateThemes(data.themes);
+    if (data.bgImage) {
+      currentBgImage = data.bgImage;
+      document.querySelector('input[value="image"]').checked = true;
+      colorRow.style.display = 'none';
+      imageRow.style.display = 'block';
+    }
   });
 
   function populateThemes(themes) {
@@ -21,41 +33,71 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  bgModeRadios.forEach((r) => {
+    r.addEventListener('change', () => {
+      if (r.value === 'image' && r.checked) {
+        colorRow.style.display = 'none';
+        imageRow.style.display = 'block';
+      } else if (r.value === 'color' && r.checked) {
+        colorRow.style.display = 'block';
+        imageRow.style.display = 'none';
+      }
+    });
+  });
+
   themeSelect.addEventListener('change', () => {
     chrome.storage.sync.get('themes', (data) => {
       const theme = data.themes && data.themes[themeSelect.value];
       if (theme) {
         bgColor.value = theme.bgColor || '#ffffff';
         fontStyle.value = theme.fontStyle || '';
+        if (theme.fontColor) fontColor.value = theme.fontColor;
       }
     });
   });
 
   saveBtn.addEventListener('click', () => {
+    const useImage = document.querySelector('input[name="bgMode"]:checked').value === 'image';
     const files = bgImage.files;
-    if (files && files[0]) {
+    if (useImage && files && files[0]) {
       const reader = new FileReader();
       reader.onload = () => {
-        saveOptions(reader.result);
+        saveOptions(reader.result, true);
       };
       reader.readAsDataURL(files[0]);
     } else {
-      saveOptions();
+      saveOptions(null, useImage);
     }
   });
 
-  function saveOptions(imageData) {
+  function saveOptions(imageData, useImage) {
     const data = {
       bgColor: bgColor.value,
-      fontStyle: fontStyle.value
+      fontStyle: fontStyle.value,
+      fontColor: fontColor.value
     };
-    if (imageData) data.bgImage = imageData;
+    if (useImage) {
+      if (imageData) {
+        data.bgImage = imageData;
+        currentBgImage = imageData;
+      } else if (currentBgImage) {
+        data.bgImage = currentBgImage;
+      }
+    }
     chrome.storage.sync.set(data, () => {
-      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-        if (tabs[0]) {
-          chrome.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
-        }
-      });
+      const afterSave = () => {
+        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+          if (tabs[0]) {
+            chrome.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
+          }
+        });
+      };
+      if (!useImage) {
+        chrome.storage.sync.remove('bgImage', afterSave);
+        currentBgImage = null;
+      } else {
+        afterSave();
+      }
     });
   }
 });

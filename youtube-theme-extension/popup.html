@@ -9,7 +9,12 @@
 </head>
 <body>
   <h3>YouTube Theme</h3>
-  <label>Background Color: <input type="color" id="bgColor"></label>
+  <div>
+    <label><input type="radio" name="bgMode" value="color" checked> Use color</label>
+    <label><input type="radio" name="bgMode" value="image"> Use custom image</label>
+  </div>
+  <label id="colorRow">Background Color: <input type="color" id="bgColor"></label>
+  <label id="imageRow" style="display:none">Custom Background Image: <input type="file" id="bgImage"></label>
   <label>Font Style:
     <select id="fontStyle">
       <option value="">Default</option>
@@ -17,9 +22,20 @@
       <option value="Courier New">Courier New</option>
       <option value="Georgia">Georgia</option>
       <option value="Times New Roman">Times New Roman</option>
+      <option value="Comic Sans MS">Comic Sans MS</option>
+      <option value="Impact">Impact</option>
+      <option value="Lucida Console">Lucida Console</option>
+      <option value="Trebuchet MS">Trebuchet MS</option>
+      <option value="Brush Script MT">Brush Script MT</option>
     </select>
   </label>
-  <label>Custom Background Image: <input type="file" id="bgImage"></label>
+  <label>Font Color:
+    <select id="fontColor">
+      <option value="">Default</option>
+      <option value="#FFFFFF">White</option>
+      <option value="#000000">Black</option>
+    </select>
+  </label>
   <label>Pre-made Theme:
     <select id="themeSelect">
       <option value="">None</option>
