@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      background: linear-gradient(135deg, #f8f9fb, #e5ecf6);
+      color: #333;
+      max-width: 500px;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    select,
+    input[type="color"] {
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: linear-gradient(90deg, #ff6a00, #ee0979);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #e65600, #c1056c);
+    }
+  </style>
+</head>
+<body>
+  <h2>Extension Options</h2>
+  <div id="themesContainer"></div>
+  <h3>Add New Theme</h3>
+  <label>Name: <input type="text" id="themeName"></label>
+  <label>Background Color: <input type="color" id="themeBgColor" value="#ffffff"></label>
+  <label>Background Image: <input type="file" id="themeBgImage" accept="image/*"></label>
+  <label>Font Style:
+    <select id="themeFontStyle">
+      <option value="" style="font-family: inherit;">Default</option>
+      <option value="Arial" style="font-family: Arial;">Arial</option>
+      <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
+      <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+      <option value="Times New Roman" style="font-family: 'Times New Roman';">Times New Roman</option>
+      <option value="Comic Sans MS" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
+      <option value="Impact" style="font-family: Impact;">Impact</option>
+      <option value="Lucida Console" style="font-family: 'Lucida Console';">Lucida Console</option>
+      <option value="Trebuchet MS" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
+      <option value="Brush Script MT" style="font-family: 'Brush Script MT';">Brush Script MT</option>
+      <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+      <option value="Palatino" style="font-family: Palatino;">Palatino</option>
+      <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+      <option value="Helvetica" style="font-family: Helvetica;">Helvetica</option>
+      <option value="Calibri" style="font-family: Calibri;">Calibri</option>
+      <option value="Segoe UI" style="font-family: 'Segoe UI';">Segoe UI</option>
+      <option value="Tahoma" style="font-family: Tahoma;">Tahoma</option>
+      <option value="Gill Sans" style="font-family: 'Gill Sans';">Gill Sans</option>
+      <option value="Optima" style="font-family: Optima;">Optima</option>
+    </select>
+  </label>
+  <label>Font Color:
+    <select id="themeFontColor">
+      <option value="">Default</option>
+      <option value="#FFFFFF">White</option>
+      <option value="#000000">Black</option>
+    </select>
+  </label>
+  <button id="addTheme">Add Theme</button>
+  <script src="options.js"></script>
+</body>
+</html>

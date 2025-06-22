@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Theme Changer",
+  "description": "Customize YouTube background color, font style and background image.",
+  "version": "1.0",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://www.youtube.com/*", "http://www.youtube.com/*"],
+  "action": {
+    "default_title": "YouTube Theme Changer",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*", "http://www.youtube.com/*"],
+      "js": ["contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

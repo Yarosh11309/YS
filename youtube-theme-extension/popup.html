@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      margin: 0;
+      padding: 16px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #f8f9fb, #e5ecf6);
+      color: #333;
+    }
+
+    h3 {
+      margin: 0 0 16px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .inline-label {
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0;
+      gap: 6px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    select,
+    input[type="color"],
+    input[type="file"] {
+      width: 100%;
+      margin-top: 4px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px 0;
+      margin-top: 12px;
+      background: linear-gradient(90deg, #ff6a00, #ee0979);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #e65600, #c1056c);
+    }
+
+    .backBtn {
+      width: auto;
+      padding: 6px 12px;
+      margin-bottom: 12px;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="mainPage">
+    <h3>YouTube Theme</h3>
+    <div class="radio-group">
+      <label class="inline-label"><input type="radio" name="bgMode" value="color" checked>Use color</label>
+      <label class="inline-label"><input type="radio" name="bgMode" value="image">Use custom image</label>
+    </div>
+    <label id="colorRow">Background Color: <input type="color" id="bgColor"></label>
+    <label id="imageRow" style="display:none">Custom Background Image: <input type="file" id="bgImage" accept="image/*"></label>
+    <label>Font Style:
+      <select id="fontStyle">
+        <option value="" style="font-family: inherit;">Default</option>
+        <option value="Arial" style="font-family: Arial;">Arial</option>
+        <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
+        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+        <option value="Times New Roman" style="font-family: 'Times New Roman';">Times New Roman</option>
+        <option value="Comic Sans MS" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
+        <option value="Impact" style="font-family: Impact;">Impact</option>
+        <option value="Lucida Console" style="font-family: 'Lucida Console';">Lucida Console</option>
+        <option value="Trebuchet MS" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
+        <option value="Brush Script MT" style="font-family: 'Brush Script MT';">Brush Script MT</option>
+        <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+        <option value="Palatino" style="font-family: Palatino;">Palatino</option>
+        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+        <option value="Helvetica" style="font-family: Helvetica;">Helvetica</option>
+        <option value="Calibri" style="font-family: Calibri;">Calibri</option>
+        <option value="Segoe UI" style="font-family: 'Segoe UI';">Segoe UI</option>
+        <option value="Tahoma" style="font-family: Tahoma;">Tahoma</option>
+        <option value="Gill Sans" style="font-family: 'Gill Sans';">Gill Sans</option>
+        <option value="Optima" style="font-family: Optima;">Optima</option>
+      </select>
+    </label>
+    <label>Font Color:
+      <select id="fontColor">
+        <option value="">Default</option>
+        <option value="#FFFFFF">White</option>
+        <option value="#000000">Black</option>
+      </select>
+    </label>
+    <label>Pre-made Theme:
+      <select id="themeSelect">
+        <option value="">None</option>
+      </select>
+    </label>
+    <button id="save">Save</button>
+    <div style="display:flex; gap:8px; margin-top:12px;">
+      <button id="youThemeBtn">You Theme</button>
+      <button id="storeBtn">Theme store</button>
+    </div>
+  </div>
+
+  <div id="storePage" style="display:none">
+    <button class="backBtn">&#8592; Back</button>
+    <h3>Theme Store</h3>
+    <div id="thumbnails" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+    <div id="themeDetails" style="display:none"></div>
+  </div>
+
+  <div id="youThemePage" style="display:none">
+    <button class="backBtn">&#8592; Back</button>
+    <h3>Your Themes</h3>
+    <div id="themesContainer"></div>
+    <h4>Create Theme</h4>
+    <label>Name: <input type="text" id="themeName"></label>
+    <div class="radio-group">
+      <label class="inline-label"><input type="radio" name="themeBgMode" value="color" checked>Use color</label>
+      <label class="inline-label"><input type="radio" name="themeBgMode" value="image">Use custom image</label>
+    </div>
+    <label id="themeColorRow">Background Color: <input type="color" id="themeBgColor" value="#ffffff"></label>
+    <label id="themeImageRow" style="display:none">Background Image: <input type="file" id="themeBgImage" accept="image/*"></label>
+    <label>Font Style:
+      <select id="themeFontStyle">
+        <option value="" style="font-family: inherit;">Default</option>
+        <option value="Arial" style="font-family: Arial;">Arial</option>
+        <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
+        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+        <option value="Times New Roman" style="font-family: 'Times New Roman';">Times New Roman</option>
+        <option value="Comic Sans MS" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
+        <option value="Impact" style="font-family: Impact;">Impact</option>
+        <option value="Lucida Console" style="font-family: 'Lucida Console';">Lucida Console</option>
+        <option value="Trebuchet MS" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
+        <option value="Brush Script MT" style="font-family: 'Brush Script MT';">Brush Script MT</option>
+        <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+        <option value="Palatino" style="font-family: Palatino;">Palatino</option>
+        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+        <option value="Helvetica" style="font-family: Helvetica;">Helvetica</option>
+        <option value="Calibri" style="font-family: Calibri;">Calibri</option>
+        <option value="Segoe UI" style="font-family: 'Segoe UI';">Segoe UI</option>
+        <option value="Tahoma" style="font-family: Tahoma;">Tahoma</option>
+        <option value="Gill Sans" style="font-family: 'Gill Sans';">Gill Sans</option>
+        <option value="Optima" style="font-family: Optima;">Optima</option>
+      </select>
+    </label>
+    <label>Font Color:
+      <select id="themeFontColor">
+        <option value="">Default</option>
+        <option value="#FFFFFF">White</option>
+        <option value="#000000">Black</option>
+      </select>
+    </label>
+    <button id="addTheme">Add Theme</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
