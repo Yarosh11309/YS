@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  chrome.storage.sync.get('themes', (data) => {
+  chrome.storage.local.get('themes', (data) => {
     const themes = data.themes || [];
     renderThemes(themes);
   });
 
   addThemeBtn.addEventListener('click', () => {
-    chrome.storage.sync.get('themes', (data) => {
+    chrome.storage.local.get('themes', (data) => {
       const themes = data.themes || [];
       themes.push({
         name: themeName.value,
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fontStyle: themeFontStyle.value,
         fontColor: themeFontColor.value
       });
-      chrome.storage.sync.set({ themes }, () => {
+      chrome.storage.local.set({ themes }, () => {
         renderThemes(themes);
         themeName.value = '';
         themeBgColor.value = '#ffffff';

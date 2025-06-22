@@ -1,6 +1,6 @@
 # YouTube Theme Changer Extension
 
-This repository contains a simple Chrome extension that allows you to customize YouTube's appearance. The popup menu lets you set a background color or your own image, pick from several font styles, choose a font color, and apply the changes instantly. Administrators can also create pre-made themes in the Options page.
+This repository contains a simple Chrome extension that allows you to customize YouTube's appearance. The popup menu lets you set a background color or your own image, pick from several font styles, choose a font color, and apply the changes instantly. Administrators can also create pre-made themes in the Options page. All settings are stored using Chrome's local storage so larger background images can be used without hitting synchronization limits.
 
 ## Features
 1. Change the page background color or set a custom image.

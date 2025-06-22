@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load saved options
   let currentBgImage = null;
-  chrome.storage.sync.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage', 'themes'], (data) => {
+  chrome.storage.local.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage', 'themes'], (data) => {
     if (data.bgColor) bgColor.value = data.bgColor;
     if (data.fontStyle) fontStyle.value = data.fontStyle;
     if (data.fontColor) fontColor.value = data.fontColor;
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   themeSelect.addEventListener('change', () => {
-    chrome.storage.sync.get('themes', (data) => {
+    chrome.storage.local.get('themes', (data) => {
       const theme = data.themes && data.themes[themeSelect.value];
       if (theme) {
         bgColor.value = theme.bgColor || '#ffffff';
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         data.bgImage = currentBgImage;
       }
     }
-    chrome.storage.sync.set(data, () => {
+    chrome.storage.local.set(data, () => {
       const afterSave = () => {
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
           if (tabs[0]) {
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       };
       if (!useImage) {
-        chrome.storage.sync.remove('bgImage', afterSave);
+        chrome.storage.local.remove('bgImage', afterSave);
         currentBgImage = null;
       } else {
         afterSave();

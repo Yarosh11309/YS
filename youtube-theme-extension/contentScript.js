@@ -36,16 +36,16 @@ function applyStyles(data) {
   }
 }
 
-chrome.storage.sync.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage'], applyStyles);
+chrome.storage.local.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage'], applyStyles);
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action === 'refresh') {
-    chrome.storage.sync.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage'], applyStyles);
+    chrome.storage.local.get(['bgColor', 'fontStyle', 'fontColor', 'bgImage'], applyStyles);
   }
 });
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'sync') {
+  if (area === 'local') {
     const data = {
       bgColor: changes.bgColor ? changes.bgColor.newValue : undefined,
       fontStyle: changes.fontStyle ? changes.fontStyle.newValue : undefined,
