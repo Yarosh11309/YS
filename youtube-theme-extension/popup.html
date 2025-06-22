@@ -147,8 +147,12 @@
     <div id="themesContainer"></div>
     <h4>Create Theme</h4>
     <label>Name: <input type="text" id="themeName"></label>
-    <label>Background Color: <input type="color" id="themeBgColor" value="#ffffff"></label>
-    <label>Background Image: <input type="file" id="themeBgImage" accept="image/*"></label>
+    <div class="radio-group">
+      <label class="inline-label"><input type="radio" name="themeBgMode" value="color" checked>Use color</label>
+      <label class="inline-label"><input type="radio" name="themeBgMode" value="image">Use custom image</label>
+    </div>
+    <label id="themeColorRow">Background Color: <input type="color" id="themeBgColor" value="#ffffff"></label>
+    <label id="themeImageRow" style="display:none">Background Image: <input type="file" id="themeBgImage" accept="image/*"></label>
     <label>Font Style:
       <select id="themeFontStyle">
         <option value="" style="font-family: inherit;">Default</option>

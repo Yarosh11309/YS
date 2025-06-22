@@ -6,7 +6,7 @@ This repository contains a simple Chrome extension that allows you to customize 
 1. Change the page background color or set a custom image that fills the screen and stays fixed while scrolling.
 2. Select from a wide range of font styles—including Helvetica, Calibri, Segoe UI and more—that override all text on the page. The dropdown shows each font using its own style for easy preview.
 3. Switch the font color between white and black (applies to all text).
-4. Create your own themes in the **You Theme** page; they appear in the "Pre-made Theme" drop-down.
+4. Create your own themes in the **You Theme** page; choose whether to use a background color or a custom image and the theme will appear in the "Pre-made Theme" drop-down.
 5. Browse built-in themes through the **Theme store**, open their details and use them with a single click.
 6. Add your own built-in themes by editing the `storeThemes` array in `popup.js`. Store themes only use images, so set a `bgImage` data URI or image path along with optional font settings.
 

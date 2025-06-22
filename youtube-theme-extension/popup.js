@@ -58,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeName = document.getElementById('themeName');
   const themeBgColor = document.getElementById('themeBgColor');
   const themeBgImage = document.getElementById('themeBgImage');
+  const themeBgModeRadios = document.querySelectorAll('input[name="themeBgMode"]');
+  const themeColorRow = document.getElementById('themeColorRow');
+  const themeImageRow = document.getElementById('themeImageRow');
   const themeFontStyle = document.getElementById('themeFontStyle');
   const themeFontColor = document.getElementById('themeFontColor');
 
@@ -172,6 +175,18 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (r.value === 'color' && r.checked) {
         colorRow.style.display = 'block';
         imageRow.style.display = 'none';
+      }
+    });
+  });
+
+  themeBgModeRadios.forEach((r) => {
+    r.addEventListener('change', () => {
+      if (r.value === 'image' && r.checked) {
+        themeColorRow.style.display = 'none';
+        themeImageRow.style.display = 'block';
+      } else if (r.value === 'color' && r.checked) {
+        themeColorRow.style.display = 'block';
+        themeImageRow.style.display = 'none';
       }
     });
   });
@@ -300,26 +315,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   addThemeBtn.addEventListener('click', () => {
+    const useImage = document.querySelector('input[name="themeBgMode"]:checked').value === 'image';
     const files = themeBgImage.files;
-    if (files && files[0]) {
+    if (useImage && files && files[0]) {
       const reader = new FileReader();
-      reader.onload = () => saveTheme(reader.result);
+      reader.onload = () => saveTheme(reader.result, true);
       reader.readAsDataURL(files[0]);
     } else {
-      saveTheme(null);
+      saveTheme(null, useImage);
     }
   });
 
-  function saveTheme(imageData) {
+  function saveTheme(imageData, useImage) {
     chrome.storage.local.get('themes', (data) => {
       const themes = data.themes || [];
       const theme = {
         name: themeName.value,
-        bgColor: themeBgColor.value,
         fontStyle: themeFontStyle.value,
         fontColor: themeFontColor.value
       };
-      if (imageData) theme.bgImage = imageData;
+      if (useImage && imageData) {
+        theme.bgImage = imageData;
+      } else {
+        theme.bgColor = themeBgColor.value;
+      }
       themes.push(theme);
       chrome.storage.local.set({ themes }, () => {
         renderYouThemes(themes);
@@ -329,6 +348,9 @@ document.addEventListener('DOMContentLoaded', () => {
         themeFontStyle.value = '';
         themeFontColor.value = '';
         themeBgImage.value = '';
+        document.querySelector('input[name="themeBgMode"][value="color"]').checked = true;
+        themeColorRow.style.display = 'block';
+        themeImageRow.style.display = 'none';
       });
     });
   }
