@@ -13,7 +13,7 @@ function applyStyles(data) {
   if (data.bgImage) {
     const val = `url(${data.bgImage})`;
     setStyle('backgroundImage', val);
-    setStyle('backgroundSize', 'contain');
+    setStyle('backgroundSize', 'cover');
     setStyle('backgroundRepeat', 'no-repeat');
     setStyle('backgroundPosition', 'center');
     setStyle('backgroundAttachment', 'fixed');
