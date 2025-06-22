@@ -4,8 +4,8 @@ This repository contains a simple Chrome extension that allows you to customize 
 
 ## Features
 1. Change the page background color or set a custom image.
-2. Select from a variety of font styles.
-3. Switch the font color between white and black.
+2. Select from a variety of font styles that override all text on the page.
+3. Switch the font color between white and black (applies to all text).
 4. Add pre-made themes in the Options page (administrator mode).
 
 ## Installation

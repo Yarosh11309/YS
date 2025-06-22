@@ -1,3 +1,5 @@
+const STYLE_ID = 'yt-theme-extension-styles';
+
 function applyStyles(data) {
   const app = document.querySelector('ytd-app');
   const setStyle = (prop, value) => {
@@ -7,15 +9,30 @@ function applyStyles(data) {
   };
 
   setStyle('backgroundColor', data.bgColor);
-  setStyle('fontFamily', data.fontStyle);
-  setStyle('color', data.fontColor);
 
   if (data.bgImage) {
     const val = `url(${data.bgImage})`;
     setStyle('backgroundImage', val);
     setStyle('backgroundSize', 'cover');
+    setStyle('backgroundRepeat', 'no-repeat');
   } else {
     setStyle('backgroundImage', '');
+  }
+
+  // Inject style element to override fonts and colors across the page
+  let styleEl = document.getElementById(STYLE_ID);
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = STYLE_ID;
+    document.head.appendChild(styleEl);
+  }
+
+  const font = data.fontStyle ? `font-family: ${data.fontStyle} !important;` : '';
+  const color = data.fontColor ? `color: ${data.fontColor} !important;` : '';
+  if (font || color) {
+    styleEl.textContent = `* { ${font} ${color} }`;
+  } else {
+    styleEl.textContent = '';
   }
 }
 
