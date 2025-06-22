@@ -4,7 +4,6 @@ const storeThemes = [
   {
     name: 'Sunny Day',
     description: 'Bright colors and comic font.',
-    bgColor: '#fff0b3',
     fontStyle: 'Comic Sans MS',
     fontColor: '#000000',
     bgImage:
@@ -13,7 +12,6 @@ const storeThemes = [
   {
     name: 'Midnight',
     description: 'Dark background with white text.',
-    bgColor: '#1a1a1a',
     fontStyle: 'Arial',
     fontColor: '#FFFFFF',
     bgImage:
@@ -22,7 +20,6 @@ const storeThemes = [
   {
     name: 'Ocean',
     description: 'Deep blue tones and modern font.',
-    bgColor: '#0077b6',
     fontStyle: 'Trebuchet MS',
     fontColor: '#FFFFFF',
     bgImage:
@@ -31,7 +28,6 @@ const storeThemes = [
   {
     name: 'Fiery Sunset',
     description: 'Warm gradient with bold text.',
-    bgColor: '#fe8a3f',
     fontStyle: 'Impact',
     fontColor: '#FFFFFF',
     bgImage:
@@ -106,13 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
       div.style.height = '60px';
       div.style.cursor = 'pointer';
       div.style.border = '1px solid #ccc';
-      if (t.bgImage) {
-        div.style.backgroundImage = `url(${resolveImage(t.bgImage)})`;
-        div.style.backgroundSize = 'cover';
-        div.style.backgroundPosition = 'center';
-      } else {
-        div.style.background = t.bgColor || '#ffffff';
-      }
+      div.style.backgroundImage = `url(${resolveImage(t.bgImage)})`;
+      div.style.backgroundSize = 'cover';
+      div.style.backgroundPosition = 'center';
       div.addEventListener('click', () => showDetails(t));
       thumbnails.appendChild(div);
     });
@@ -136,13 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const preview = document.createElement('div');
     preview.style.width = '100%';
     preview.style.height = '80px';
-    if (theme.bgImage) {
-      preview.style.backgroundImage = `url(${resolveImage(theme.bgImage)})`;
-      preview.style.backgroundSize = 'cover';
-      preview.style.backgroundPosition = 'center';
-    } else {
-      preview.style.background = theme.bgColor || '#ffffff';
-    }
+    preview.style.backgroundImage = `url(${resolveImage(theme.bgImage)})`;
+    preview.style.backgroundSize = 'cover';
+    preview.style.backgroundPosition = 'center';
     themeDetails.appendChild(preview);
     const font = document.createElement('p');
     font.style.fontFamily = theme.fontStyle || 'inherit';
@@ -257,7 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyThemeFromStore(theme) {
     const data = {
-      bgColor: theme.bgColor || '#ffffff',
       fontStyle: theme.fontStyle || '',
       fontColor: theme.fontColor || ''
     };
@@ -265,19 +252,17 @@ document.addEventListener('DOMContentLoaded', () => {
       data.bgImage = resolveImage(theme.bgImage);
     }
     const done = () => {
-      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         if (tabs[0]) {
-          chrome.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
+          chrome.tabs.sendMessage(tabs[0].id, { action: 'refresh' });
         }
       });
     };
-    if (!theme.bgImage) {
-      chrome.storage.local.set(data, () => {
-        chrome.storage.local.remove('bgImage', done);
-      });
-    } else {
-      chrome.storage.local.set(data, done);
-    }
+    chrome.storage.local.set(data, () => {
+      const keys = ['bgColor'];
+      if (!theme.bgImage) keys.push('bgImage');
+      chrome.storage.local.remove(keys, done);
+    });
   }
 
   function loadStore() {
