@@ -13,4 +13,4 @@ This repository contains a simple Chrome extension that allows you to customize 
 2. Enable **Developer mode** (toggle in the top right corner).
 3. Click **Load unpacked** and select the `youtube-theme-extension` folder.
 
-After loading, click on the extension icon on YouTube to open the popup menu. Use the Options link to manage pre-made themes.
+After loading, open YouTube and click the extension icon to access the popup menu. Selecting a color, font or image applies the change immediately on the page. Use the Options link to manage pre-made themes.

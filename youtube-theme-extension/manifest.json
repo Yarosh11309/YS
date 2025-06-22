@@ -3,7 +3,7 @@
   "name": "YouTube Theme Changer",
   "description": "Customize YouTube background color, font style and background image.",
   "version": "1.0",
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
   "host_permissions": ["https://www.youtube.com/*", "http://www.youtube.com/*"],
   "action": {
     "default_title": "YouTube Theme Changer",

@@ -50,6 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
       fontStyle: fontStyle.value
     };
     if (imageData) data.bgImage = imageData;
-    chrome.storage.sync.set(data);
+    chrome.storage.sync.set(data, () => {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        if (tabs[0]) {
+          chrome.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
+        }
+      });
+    });
   }
 });
