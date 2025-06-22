@@ -52,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
         bgColor.value = theme.bgColor || '#ffffff';
         fontStyle.value = theme.fontStyle || '';
         if (theme.fontColor) fontColor.value = theme.fontColor;
+        if (theme.bgImage) {
+          currentBgImage = theme.bgImage;
+          document.querySelector('input[value="image"]').checked = true;
+          colorRow.style.display = 'none';
+          imageRow.style.display = 'block';
+        } else {
+          document.querySelector('input[value="color"]').checked = true;
+          colorRow.style.display = 'block';
+          imageRow.style.display = 'none';
+          currentBgImage = null;
+        }
       }
     });
   });

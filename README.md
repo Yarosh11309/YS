@@ -6,12 +6,12 @@ This repository contains a simple Chrome extension that allows you to customize 
 1. Change the page background color or set a custom image that fills the screen and stays fixed while scrolling.
 2. Select from a variety of font styles that override all text on the page.
 3. Switch the font color between white and black (applies to all text).
-4. Add pre-made themes in the Options page (administrator mode).
+4. Add pre-made themes in the Options page (administrator mode), including custom background images.
 
 ## Installation
 1. Open Google Chrome and navigate to `chrome://extensions`.
 2. Enable **Developer mode** (toggle in the top right corner).
 3. Click **Load unpacked** and select the `youtube-theme-extension` folder.
 
-After loading, open YouTube and click the extension icon to access the popup menu. Selecting a color, font or image applies the change immediately on the page. Use the Options link to manage pre-made themes.
+After loading, open YouTube and click the extension icon to access the popup menu. Selecting a color, font or image applies the change immediately on the page. Use the Options link to manage pre-made themes and upload background images for them.
 Custom background images automatically cover the screen and remain fixed as you scroll.
