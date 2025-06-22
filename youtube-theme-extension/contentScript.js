@@ -13,8 +13,9 @@ function applyStyles(data) {
   if (data.bgImage) {
     const val = `url(${data.bgImage})`;
     setStyle('backgroundImage', val);
-    setStyle('backgroundSize', 'cover');
+    setStyle('backgroundSize', 'contain');
     setStyle('backgroundRepeat', 'no-repeat');
+    setStyle('backgroundPosition', 'center');
   } else {
     setStyle('backgroundImage', '');
   }
