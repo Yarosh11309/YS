@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Extension Options</h2>
+  <div id="themesContainer"></div>
+  <h3>Add New Theme</h3>
+  <label>Name: <input type="text" id="themeName"></label>
+  <label>Background Color: <input type="color" id="themeBgColor" value="#ffffff"></label>
+  <label>Font Style:
+    <select id="themeFontStyle">
+      <option value="">Default</option>
+      <option value="Arial">Arial</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Times New Roman">Times New Roman</option>
+    </select>
+  </label>
+  <button id="addTheme">Add Theme</button>
+  <script src="options.js"></script>
+</body>
+</html>

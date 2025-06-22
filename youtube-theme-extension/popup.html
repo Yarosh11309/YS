@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 250px; font-family: Arial, sans-serif; padding: 10px; }
+    label { display: block; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h3>YouTube Theme</h3>
+  <label>Background Color: <input type="color" id="bgColor"></label>
+  <label>Font Style:
+    <select id="fontStyle">
+      <option value="">Default</option>
+      <option value="Arial">Arial</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Times New Roman">Times New Roman</option>
+    </select>
+  </label>
+  <label>Custom Background Image: <input type="file" id="bgImage"></label>
+  <label>Pre-made Theme:
+    <select id="themeSelect">
+      <option value="">None</option>
+    </select>
+  </label>
+  <button id="save">Save</button>
+  <p><a href="options.html" target="_blank">Options</a></p>
+  <script src="popup.js"></script>
+</body>
+</html>
