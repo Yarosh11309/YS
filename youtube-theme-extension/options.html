@@ -3,8 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    label { display: block; margin-top: 10px; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      background: #ffffff;
+      color: #333;
+      max-width: 500px;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    select,
+    input[type="color"] {
+      padding: 6px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background: #fafafa;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: linear-gradient(90deg, #ff4e45, #d90429);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #e33b35, #b40320);
+    }
   </style>
 </head>
 <body>
